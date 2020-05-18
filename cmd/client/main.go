@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&flagMode, "mode", "console", "Interface mode. Accepts `console`, `web-ui` args")
+	flag.StringVar(&flagMode, "mode", "console", "Interface mode. Accepts `console`, `web-ui` values")
 }
 
 func main() {
