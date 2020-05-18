@@ -81,3 +81,8 @@ func (w *Wrapper) GetUpdatesChan() (UpdatesChannel, error) {
 func (w *Wrapper) Run() error {
 	return w.Client.RunContext(w.ctx)
 }
+
+// WriteMessage writes the given message to the stream
+func (w *Wrapper) WriteMessage(m *Message) error {
+	return w.Client.WriteMessage(m.Message)
+}

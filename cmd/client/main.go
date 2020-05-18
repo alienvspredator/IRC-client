@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"flag"
-	"fmt"
 	"log"
 	"net"
 	"os"
@@ -12,6 +10,7 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/alienvspredator/irc/pkg/consoleinput"
 	flagcheck "github.com/alienvspredator/irc/pkg/flag"
 	"github.com/alienvspredator/irc/pkg/ircwrapper"
 	"gopkg.in/irc.v3"
@@ -82,21 +81,11 @@ func main() {
 		listenUpdates(ch)
 	}()
 
+	input := consoleinput.NewInput(ctx)
+	inputch := input.GetInputChan()
 	go func() {
-		for {
-			buf := bufio.NewReader(os.Stdin)
-			fmt.Print("> ")
-			sentence, err := buf.ReadBytes('\n')
-			if err != nil {
-				log.Println(err)
-				continue
-			}
-
-			m, err := irc.ParseMessage(string(sentence))
-			if err != nil {
-				log.Println(err)
-			}
-			client.WriteMessage(m)
+		for msg := range inputch {
+			client.WriteMessage(msg)
 		}
 	}()
 
@@ -106,8 +95,10 @@ func main() {
 	go func() {
 		s := <-sigc
 		client.WriteMessage(
-			&irc.Message{
-				Command: "QUIT",
+			&ircwrapper.Message{
+				Message: &irc.Message{
+					Command: "QUIT",
+				},
 			},
 		)
 		log.Println(s.String())
