@@ -6,6 +6,7 @@ import (
 
 	"github.com/alienvspredator/irc/internal/app"
 	"github.com/alienvspredator/irc/internal/consoleapp"
+	"github.com/alienvspredator/irc/internal/telegramapp"
 	"github.com/alienvspredator/irc/internal/webapp"
 	flagcheck "github.com/alienvspredator/irc/pkg/flag"
 )
@@ -18,7 +19,12 @@ var (
 )
 
 func init() {
-	flag.StringVar(&flagMode, "mode", "console", "Interface mode. Accepts `console`, `web-ui` values")
+	flag.StringVar(
+		&flagMode,
+		"mode",
+		"console",
+		"Interface mode. Accepts `console`, `web-ui`, `telegram` values",
+	)
 }
 
 func main() {
@@ -33,11 +39,13 @@ func main() {
 		app = consoleapp.NewApp()
 	case "web-ui":
 		app = webapp.NewApp()
+	case "telegram":
+		app = telegramapp.NewApp()
 	default:
 		log.Fatalf("Mode %s is unknown\n", flagMode)
 	}
 
 	if err := app.Run(); err != nil {
-		log.Fatalf("Application exited with error %s", err.Error())
+		log.Fatalf("Application exited with error: %v", err)
 	}
 }

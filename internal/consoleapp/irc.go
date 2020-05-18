@@ -10,6 +10,6 @@ import (
 func runIrc(wg *sync.WaitGroup, client *ircwrapper.Wrapper) {
 	defer wg.Done()
 	if err := client.Run(); err != nil {
-		log.Printf("IRC Client exit with error: %s", err.Error())
+		log.Printf("IRC Client exit with error: %v", err)
 	}
 }
