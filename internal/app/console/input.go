@@ -6,7 +6,7 @@ import (
 	"github.com/alienvspredator/irc/pkg/ircwrapper"
 )
 
-func listenInput(
+func (a *App) listenInput(
 	ctx context.Context,
 	inputch <-chan *ircwrapper.Message,
 	client *ircwrapper.Wrapper,

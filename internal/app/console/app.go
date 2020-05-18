@@ -2,27 +2,33 @@ package console
 
 import (
 	"context"
-	"log"
 	"net"
 	"sync"
 
 	"github.com/alienvspredator/irc/internal/app"
 	"github.com/alienvspredator/irc/pkg/consoleinput"
 	"github.com/alienvspredator/irc/pkg/ircwrapper"
+	"go.uber.org/zap"
 )
 
 // App is the console application
 type App struct {
 	app.Runner
+	logger *zap.Logger
 }
 
 // NewApp creates the new app.
 func NewApp() *App {
-	return new(App)
+	logger, _ := zap.NewProduction(zap.AddCaller())
+
+	return &App{
+		logger: logger,
+	}
 }
 
 // Run starts the app in console mode.
 func (a *App) Run() error {
+	defer a.logger.Sync()
 	if err := initFlags(); err != nil {
 		return err
 	}
@@ -48,13 +54,13 @@ func (a *App) Run() error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	go runIrc(&wg, client)
-	go listenUpdates(&wg, updatech)
-	go listenInput(ctx, inputch, client)
-	go listenSignals(cancel)
+	go a.runIrc(&wg, client)
+	go a.listenUpdates(&wg, updatech)
+	go a.listenInput(ctx, inputch, client)
+	go a.listenSignals(cancel)
 
 	wg.Wait()
 
-	log.Println("Exiting from application")
+	a.logger.Info("Application did job")
 	return nil
 }

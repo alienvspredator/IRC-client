@@ -1,19 +1,20 @@
 package console
 
 import (
-	"log"
+	"fmt"
 	"sync"
 
 	"github.com/alienvspredator/irc/pkg/ircwrapper"
 )
 
-func updatesListener(ch ircwrapper.UpdatesChannel) {
+func (a *App) updatesListener(ch ircwrapper.UpdatesChannel) {
 	for update := range ch {
-		log.Println(update.Message.String())
+		fmt.Println(update.Message.String())
 	}
 }
 
-func listenUpdates(wg *sync.WaitGroup, ch ircwrapper.UpdatesChannel) {
+func (a *App) listenUpdates(wg *sync.WaitGroup, ch ircwrapper.UpdatesChannel) {
 	defer wg.Done()
-	updatesListener(ch)
+	a.logger.Info("Starting IRC updates listener")
+	a.updatesListener(ch)
 }

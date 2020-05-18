@@ -2,16 +2,17 @@ package console
 
 import (
 	"context"
-	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"go.uber.org/zap"
 )
 
-func listenSignals(cancel context.CancelFunc) {
+func (a *App) listenSignals(cancel context.CancelFunc) {
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGINT)
 	s := <-sigc
-	log.Println(s.String())
+	a.logger.Info("Got OS signal", zap.Stringer("Signal", s))
 	cancel()
 }
