@@ -10,12 +10,16 @@ import (
 
 // ConsoleInput allows to interract with IRC input from console.
 type ConsoleInput struct {
+	ircwrapper.Inputer
 	ctx    context.Context
 	Buffer int
 }
 
+// LAB: 3
+// PATTERN: Abstract factory
+
 // NewInput creates a new inputer.
-func NewInput(ctx context.Context) *ConsoleInput {
+func NewInput(ctx context.Context) ircwrapper.Inputer {
 	ci := ConsoleInput{
 		ctx:    ctx,
 		Buffer: 100,
@@ -24,8 +28,11 @@ func NewInput(ctx context.Context) *ConsoleInput {
 	return &ci
 }
 
-// GetInputChan implements ircwrapper.Inputer interface.
-func (ci *ConsoleInput) GetInputChan() <-chan *ircwrapper.Message {
+// LAB: 3
+// PATTERN: Abstract factory
+
+// NewInputChan implements ircwrapper.Inputer interface.
+func (ci *ConsoleInput) NewInputChan() <-chan *ircwrapper.Message {
 	ch := make(chan *ircwrapper.Message, ci.Buffer)
 
 	go func() {

@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/alienvspredator/irc/internal/app"
 	"github.com/alienvspredator/irc/internal/consoleapp"
 	"github.com/alienvspredator/irc/internal/webapp"
 	flagcheck "github.com/alienvspredator/irc/pkg/flag"
@@ -26,12 +27,17 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	var app app.App
 	switch flagMode {
 	case "console":
-		consoleapp.Run()
+		app = consoleapp.NewApp()
 	case "web-ui":
-		webapp.Run()
+		app = webapp.NewApp()
 	default:
 		log.Fatalf("Mode %s is unknown\n", flagMode)
+	}
+
+	if err := app.Run(); err != nil {
+		log.Fatalf("Application exited with error %s", err.Error())
 	}
 }

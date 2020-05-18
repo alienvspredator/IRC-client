@@ -1,28 +1,22 @@
 package webapp
 
 import (
-	"flag"
-	"log"
-
-	flagcheck "github.com/alienvspredator/irc/pkg/flag"
+	"errors"
 )
 
-var (
-	flagPort string
+// App is the IRC application with web UI.
+type App struct{}
 
-	requiredFlags = []string{}
-)
-
-func init() {
-	flag.StringVar(&flagPort, "port", "4669", "Port on which web UI will be served")
+// NewApp creates the instane of the application.
+func NewApp() *App {
+	return new(App)
 }
 
 // Run starts the app in web-ui mode.
-func Run() {
-	flag.Parse()
-	if err := flagcheck.CheckRequired(requiredFlags); err != nil {
-		log.Fatalln(err)
+func (a *App) Run() error {
+	if err := initFlags(); err != nil {
+		return err
 	}
 
-	log.Fatalln("Web UI is not implemented yet")
+	return errors.New("Web UI is not implemented yet")
 }

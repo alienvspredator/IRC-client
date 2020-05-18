@@ -2,10 +2,14 @@ package ircwrapper
 
 import (
 	"context"
+	"io"
 	"net"
 
 	"gopkg.in/irc.v3"
 )
+
+// LAB: 1
+// PATTERN: Proxy
 
 // Wrapper allows to interact with IRC Server using channels.
 type Wrapper struct {
@@ -79,7 +83,11 @@ func (w *Wrapper) GetUpdatesChan() (UpdatesChannel, error) {
 // strange and unexpected ways if it is called again before the first connection
 // exits.
 func (w *Wrapper) Run() error {
-	return w.Client.RunContext(w.ctx)
+	if err := w.Client.RunContext(w.ctx); err != io.EOF {
+		return err
+	}
+
+	return nil
 }
 
 // WriteMessage writes the given message to the stream
