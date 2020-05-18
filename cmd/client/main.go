@@ -22,7 +22,6 @@ func init() {
 
 func main() {
 	flag.Parse()
-	flag.Parse()
 	if err := flagcheck.CheckRequired(requiredFlags); err != nil {
 		log.Fatalln(err)
 	}
