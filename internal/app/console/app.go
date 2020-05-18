@@ -1,4 +1,4 @@
-package consoleapp
+package console
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 
 // App is the console application
 type App struct {
-	app.App
+	app.Runner
 }
 
 // NewApp creates the new app.

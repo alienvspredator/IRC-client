@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/alienvspredator/irc/internal/app"
-	"github.com/alienvspredator/irc/internal/consoleapp"
-	"github.com/alienvspredator/irc/internal/telegramapp"
-	"github.com/alienvspredator/irc/internal/webapp"
+	"github.com/alienvspredator/irc/internal/app/console"
+	"github.com/alienvspredator/irc/internal/app/telegram"
+	"github.com/alienvspredator/irc/internal/app/web"
 	flagcheck "github.com/alienvspredator/irc/pkg/flag"
 )
 
@@ -33,14 +33,14 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	var app app.App
+	var app app.Runner
 	switch flagMode {
 	case "console":
-		app = consoleapp.NewApp()
+		app = console.NewApp()
 	case "web-ui":
-		app = webapp.NewApp()
+		app = web.NewApp()
 	case "telegram":
-		app = telegramapp.NewApp()
+		app = telegram.NewApp()
 	default:
 		log.Fatalf("Mode %s is unknown\n", flagMode)
 	}

@@ -1,6 +1,6 @@
 package app
 
-// App is the application.
-type App interface {
+// Runner is the application.
+type Runner interface {
 	Run() error
 }

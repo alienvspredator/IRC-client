@@ -1,4 +1,4 @@
-package consoleapp
+package console
 
 import (
 	"flag"

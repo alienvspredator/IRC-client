@@ -1,4 +1,4 @@
-package webapp
+package telegram
 
 import (
 	"flag"
@@ -9,11 +9,11 @@ import (
 var (
 	flagPort string
 
-	requiredFlags = []string{}
+	requiredFlags = []string{"token"}
 )
 
 func init() {
-	flag.StringVar(&flagPort, "port", "4669", "Port on which web UI will be served")
+	flag.StringVar(&flagPort, "token", "", "Telegram Token")
 }
 
 func initFlags() error {
