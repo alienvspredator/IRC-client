@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/alienvspredator/irc/internal/consoleapp"
+	"github.com/alienvspredator/irc/internal/webapp"
 	flagcheck "github.com/alienvspredator/irc/pkg/flag"
 )
 
@@ -30,7 +31,7 @@ func main() {
 	case "console":
 		consoleapp.Run()
 	case "web-ui":
-		log.Fatalln("Web UI is not implemented")
+		webapp.Run()
 	default:
 		log.Fatalf("Mode %s is unknown\n", flagMode)
 	}

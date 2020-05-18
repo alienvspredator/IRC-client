@@ -27,7 +27,6 @@ var (
 		"nick",
 		"name",
 		"host",
-		"mode",
 	}
 )
 
