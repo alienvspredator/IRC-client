@@ -24,19 +24,5 @@
 				"Danylo Shevchenko"
 			]
 		},
-		{
-			"name": "Launch Telegram",
-			"type": "go",
-			"request": "launch",
-			"mode": "auto",
-			"program": "${workspaceFolder}/cmd/client/main.go",
-			"env": {},
-			"args": [
-				"-mode",
-				"telegram",
-				"-token",
-				"1202294623:AAEqAcxXp-J9gEru7UHhPFdMAd11mIKED5c"
-			]
-		}
 	]
 }
