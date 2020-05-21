@@ -18,9 +18,7 @@ type App struct {
 }
 
 // NewApp creates the new app.
-func NewApp() *App {
-	logger, _ := zap.NewProduction(zap.AddCaller())
-
+func NewApp(logger *zap.Logger) *App {
 	return &App{
 		logger: logger,
 	}
@@ -56,7 +54,7 @@ func (a *App) Run() error {
 
 	go a.runIrc(&wg, client)
 	go a.listenUpdates(&wg, updatech)
-	go a.listenInput(ctx, inputch, client)
+	go a.listenInput(inputch, client)
 	go a.listenSignals(cancel)
 
 	wg.Wait()

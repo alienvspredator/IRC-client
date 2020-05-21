@@ -7,13 +7,13 @@ import (
 )
 
 var (
-	flagPort string
+	flagToken string
 
 	requiredFlags = []string{"token"}
 )
 
 func init() {
-	flag.StringVar(&flagPort, "token", "", "Telegram Token")
+	flag.StringVar(&flagToken, "token", "", "Telegram Token")
 }
 
 func initFlags() error {
