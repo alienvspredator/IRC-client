@@ -4,7 +4,6 @@ import (
 	"context"
 	"sync"
 
-	"github.com/alienvspredator/irc/internal/app"
 	"github.com/alienvspredator/irc/pkg/zap/telegramadapter"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"go.uber.org/zap"
@@ -13,7 +12,6 @@ import (
 
 // App is Telegram IRC App
 type App struct {
-	app.Runner
 	botAPI *tgbotapi.BotAPI
 	logger *zap.Logger
 }

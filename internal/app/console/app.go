@@ -5,7 +5,6 @@ import (
 	"net"
 	"sync"
 
-	"github.com/alienvspredator/irc/internal/app"
 	"github.com/alienvspredator/irc/pkg/consoleinput"
 	"github.com/alienvspredator/irc/pkg/ircwrapper"
 	"go.uber.org/zap"
@@ -13,7 +12,6 @@ import (
 
 // App is the console application
 type App struct {
-	app.Runner
 	logger *zap.Logger
 }
 
