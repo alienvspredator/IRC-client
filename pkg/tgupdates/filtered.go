@@ -18,7 +18,7 @@ func GetFilteredUpdatesChan(
 		return nil, err
 	}
 
-	ch := make(chan tgbotapi.Update, bot.Buffer)
+	ch := make(chan tgbotapi.Update, 0)
 	go func() {
 		for update := range updates {
 			if update.Message == nil {

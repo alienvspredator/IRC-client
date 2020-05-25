@@ -2,7 +2,6 @@ package telegram
 
 import (
 	"context"
-	"sync"
 
 	"github.com/alienvspredator/irc/pkg/zap/telegramadapter"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -45,21 +44,19 @@ func (a *App) Run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	wg := new(sync.WaitGroup)
-	wg.Add(1)
-
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
-	updates, err := bot.GetUpdatesChan(u)
+	tgupdates, err := bot.GetUpdatesChan(u)
 	if err != nil {
-		return xerrors.Errorf("Cannot get updates channel: %w", err)
+		return xerrors.Errorf("Cannot get telegram updates channel: %w", err)
 	}
 
 	go a.listenSignals(cancel)
-	go a.listenUpdates(ctx, wg, updates)
+	go a.listenTgUpdates(ctx, tgupdates)
 
-	wg.Wait()
+	<-ctx.Done()
+	bot.StopReceivingUpdates()
 
 	return nil
 }
