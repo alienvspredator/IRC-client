@@ -84,11 +84,17 @@ func (m *Message) String() string {
 	return buf.String()
 }
 
+// MaybeMessage can be error and are using for channels
+type MaybeMessage struct {
+	Message *Message
+	Error   error
+}
+
 // LAB: 3
 // PATTERN: Abstract factory
 
 // Inputer is an interface that allows to get input messages to interract with
 // IRC.
 type Inputer interface {
-	NewInputChan() <-chan *Message
+	NewInputChan() <-chan *MaybeMessage
 }
